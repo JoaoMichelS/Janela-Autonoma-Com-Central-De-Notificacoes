@@ -13,7 +13,7 @@ Stepper myStepper(stepsPerRevolution, in1,in3,in2,in4);
 #define pinSensorA A0
 #define pinSensorD 12
 #define fimDeCursoPin 2
-#define DELAY_LEITURA 3000
+#define DELAY_LEITURA 5000
 
 bool fimDeCursoState;
 unsigned long ultimaLeitura;
@@ -24,7 +24,6 @@ void setup() {
   myStepper.setSpeed(90);
 
   Serial.begin(9600);
-
 }
 
 void loop() {
@@ -32,11 +31,11 @@ void loop() {
 
   if(millis() - ultimaLeitura > DELAY_LEITURA){
     if(digitalRead(pinSensorD)){
-      Serial.print("0");
+      Serial.print("0\n");
     }else{
-      Serial.print("1");
+      Serial.print("1\n");
       if(fimDeCursoState == LOW){
-        //Serial.print("5");
+        //Serial.print("5\n");
         myStepper.step(stepsPerRevolution);
       }
     }

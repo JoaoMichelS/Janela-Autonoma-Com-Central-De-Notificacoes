@@ -38,8 +38,8 @@ bool ledState = LOW;
 
 // Handle what happens when you receive new messages
 void handleNewMessages(int numNewMessages) {
-  Serial.println("handleNewMessages");
-  Serial.println(String(numNewMessages));
+  //Serial.println("handleNewMessages");
+  //Serial.println(String(numNewMessages));
 
   for (int i=0; i<numNewMessages; i++) {
     // Chat id of the requester
@@ -58,7 +58,7 @@ void handleNewMessages(int numNewMessages) {
     if (text == "/start") {
       String welcome = "Welcome, " + from_name + ".\n";
       welcome += "Use os comandos abaixo para controlar suas saídas.\n\n";
-      welcome += "/fechar para fecahr a janela \n";
+      welcome += "/fechar para fechar a janela \n";
       //welcome += "/led_off to turn GPIO OFF \n";
       //welcome += "/state to request current GPIO state \n";
       bot.sendMessage(chat_id, welcome, "");
@@ -67,7 +67,7 @@ void handleNewMessages(int numNewMessages) {
     if (text == "/fechar") {
       bot.sendMessage(chat_id, "Janela fechando...", "");
       //ledState = HIGH;
-      Serial.print("1");
+      Serial.print("1\n");
       //digitalWrite(ledPin, ledState);
     }
     
@@ -118,7 +118,7 @@ void setup() {
     Serial.println("Connecting to WiFi..");
   }
   // Print ESP32 Local IP Address
-  Serial.println(WiFi.localIP());
+  //Serial.println(WiFi.localIP());
 }
 
 void loop() {
@@ -126,7 +126,7 @@ void loop() {
     int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
 
     while(numNewMessages) {
-      Serial.println("got response");
+      //Serial.println("got response");
       handleNewMessages(numNewMessages);
       numNewMessages = bot.getUpdates(bot.last_message_received + 1);
     }
@@ -134,19 +134,13 @@ void loop() {
   }
 
   if(Serial.available()){
-    int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+    String chat_id = "908161889";
     String mensagem = Serial.readString();
-    int chovendo = mensagem.toInt();
-    for (int i=0; i<numNewMessages; i++) {
-      // Chat id of the requester
-      String chat_id = String(bot.messages[i].chat_id);
-      if (chat_id != CHAT_ID){
-        bot.sendMessage(chat_id, "Unauthorized user", "");
-        continue;
-      }
-      if(chovendo == 5){
-        bot.sendMessage(chat_id, "Está chovendo, estou fechando!", "");
-      }
+    int teste = mensagem.toInt();
+    Serial.print(mensagem);
+    if(teste == 5){
+      Serial.println("Alerta chuva!");
+      bot.sendMessage(chat_id, "Está chovendo, estou fechando!");
     }
-  } 
-}
+  }
+} 
