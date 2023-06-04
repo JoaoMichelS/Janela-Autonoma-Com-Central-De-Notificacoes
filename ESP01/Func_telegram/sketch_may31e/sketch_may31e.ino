@@ -79,7 +79,24 @@ void handleNewMessages(int numNewMessages) {
     */
 
     if (text == "/status") {
-      if (Serial.available()){
+      Serial.println("4");
+      delay(1000);
+      if(Serial.available()){
+        String mensagem = Serial.readString();
+        int status = mensagem.toInt();
+        if(status == 1){
+          bot.sendMessage(chat_id, "Está chovendo!", "");
+        }
+        if(status == 0){
+          bot.sendMessage(chat_id, "Não está chovendo!", "");
+        }
+        else{
+          bot.sendMessage(chat_id, "Erro na resposta via Serial!", "");
+        }
+      }else{
+        bot.sendMessage(chat_id, "Erro na comunicação!");
+      }
+      /*if (Serial.available()){
         String mensagem = Serial.readString();
         int status = mensagem.toInt();
         if(status == 1){
@@ -91,7 +108,7 @@ void handleNewMessages(int numNewMessages) {
         else{
         bot.sendMessage(chat_id, "LED is OFF", "");
         }
-      }
+      }*/
     }
   }
 }
