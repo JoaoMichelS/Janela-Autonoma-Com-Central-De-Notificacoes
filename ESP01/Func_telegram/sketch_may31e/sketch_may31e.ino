@@ -59,8 +59,8 @@ void handleNewMessages(int numNewMessages) {
       String welcome = "Welcome, " + from_name + ".\n";
       welcome += "Use os comandos abaixo para controlar suas saídas.\n\n";
       welcome += "/fechar para fechar a janela \n";
-      //welcome += "/led_off to turn GPIO OFF \n";
-      //welcome += "/state to request current GPIO state \n";
+      welcome += "/abrir para abrir a janela \n";
+      welcome += "/status para verificar o status da janela \n";
       bot.sendMessage(chat_id, welcome, "");
     }
 
@@ -68,6 +68,13 @@ void handleNewMessages(int numNewMessages) {
       bot.sendMessage(chat_id, "Janela fechando...", "");
       //ledState = HIGH;
       Serial.print("1\n");
+      //digitalWrite(ledPin, ledState);
+    }
+
+    if (text == "/abrir") {
+      bot.sendMessage(chat_id, "Janela abrindo...", "");
+      //ledState = HIGH;
+      Serial.print("6\n");
       //digitalWrite(ledPin, ledState);
     }
     
@@ -80,7 +87,7 @@ void handleNewMessages(int numNewMessages) {
 
     if (text == "/status") {
       Serial.println("4");
-      delay(1000);
+      delay(4000);
       if(Serial.available()){
         String mensagem = Serial.readString();
         int status = mensagem.toInt();
@@ -154,7 +161,7 @@ void loop() {
     String chat_id = "908161889";
     String mensagem = Serial.readString();
     int teste = mensagem.toInt();
-    Serial.print(mensagem);
+    //Serial.print(mensagem);
     if(teste == 5){
       Serial.println("Alerta chuva!");
       bot.sendMessage(chat_id, "Está chovendo, estou fechando!");

@@ -13,6 +13,7 @@ Stepper myStepper(stepsPerRevolution, in1,in3,in2,in4);
 #define pinSensorA A0
 #define pinSensorD 12
 #define fimDeCursoPin 2
+#define fimDeCursoPin2 3
 #define DELAY_LEITURA 5000
 
 bool fimDeCursoState;
@@ -30,24 +31,38 @@ void loop() {
   fimDeCursoState = digitalRead(fimDeCursoPin);
 
   if(millis() - ultimaLeitura > DELAY_LEITURA){
-    if(digitalRead(pinSensorD)){
-      Serial.print("0\n");
-    }else{
-      Serial.print("1\n");
-      if(fimDeCursoState == LOW){
-        //Serial.print("5\n");
-        myStepper.step(stepsPerRevolution);
+    if(digitalRead(pinSensorD) == LOW){
+      while(digitalRead(fimDeCursoPin) == LOW){
+        Serial.println("5");
+        myStepper.step(-stepsPerRevolution);
       }
-    }
+    }//else{
+      //Serial.println("8");
+    //}
     ultimaLeitura = millis();
   }
 
   if(Serial.available()){
     String mensagem = Serial.readString();
-    int fec_janela = mensagem.toInt();
-    if(fec_janela == 1){
-      if(fimDeCursoState == LOW){
+    int mensagem_int = mensagem.toInt();
+    //Serial.println(mensagem);
+    //Serial.println(mensagem_int);
+    if(mensagem_int == 1){
+      while(digitalRead(fimDeCursoPin) == LOW){
+        myStepper.step(-stepsPerRevolution);
+      }
+    }
+    if(mensagem_int == 6){
+      while(digitalRead(fimDeCursoPin2) == LOW){
         myStepper.step(stepsPerRevolution);
+      }
+    }
+    if(mensagem_int == 4){
+      if(digitalRead(pinSensorD) == HIGH){
+        Serial.println("0");
+      }
+      if(digitalRead(pinSensorD) == LOW){
+        Serial.println("1");
       }
     }
   }
