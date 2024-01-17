@@ -9,7 +9,7 @@ janelas para dias chuvosos, a partir de um sensor de umidade, um sensor de fim d
 motor e um Arduino Uno, juntamente com um software, permite identificar, registrar e tomar as devidas medidas de maneira eficiente e versátil. Desse modo, a segurança dos ambientes que foram
 adaptados com tal solução é aprimorada, sendo possível controlar o sistema de funcionamento da
 janela pelo celular, tal como identificar o inicio de chuvas, para a execução do processo. Além de
-receber um alerta via Telegram, se está chovendo em sua residencia e se as medidas foram tomadas. Além disso, o projeto pode contribuir para a otimização de processos e facilitar a locomoção de
+receber um alerta via Telegram, se está chovendo em sua residência e se as medidas foram tomadas. Além disso, o projeto pode contribuir para a otimização de processos e facilitar a locomoção de
 seu consumidor ao evitar que precise retornar a sua residência para tomar as medidas necessárias
 contra a chuva.
 
